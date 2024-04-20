@@ -6,7 +6,7 @@
 /*   By: shebaz <shebaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:02:49 by shebaz            #+#    #+#             */
-/*   Updated: 2024/04/20 13:55:34 by shebaz           ###   ########.fr       */
+/*   Updated: 2024/04/20 15:58:42 by shebaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,3 @@ int	main(int argc, char **argv)//Almost done
 		sort_stacka(&stack_a);
 	return (0);
 }
-	// t_stack *courant = stack_a;
-	// 	int i = 0;
-	// 	while(courant)
-	// 	{
-	// 		printf("data %d = %d\n",i,courant->data);
-	// 		i++;
-	// 		courant = courant->next;	
-	// 	}
-	// 	if(is_stack_sorted(stack_a,0))
-	// 		printf("yes\n");
-	// 	else
-	// 		printf("No\n");

@@ -6,7 +6,7 @@
 /*   By: shebaz <shebaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:03:12 by shebaz            #+#    #+#             */
-/*   Updated: 2024/04/20 13:58:51 by shebaz           ###   ########.fr       */
+/*   Updated: 2024/04/20 15:52:23 by shebaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,12 @@ void	push_half_to_stackb(t_stack **stackA, t_stack **stackB)//done
 		if ((*stackA)->index < half_size)
 		{
 			pb(stackA, stackB);
-			printf("pb\n");
+			ft_printf("pb\n");
 		}
 		else
 		{
 			ra(stackA);
-			printf("ra\n");
+			ft_printf("ra\n");
 		}
 		i++;
 	}

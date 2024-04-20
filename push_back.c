@@ -6,7 +6,7 @@
 /*   By: shebaz <shebaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:03:00 by shebaz            #+#    #+#             */
-/*   Updated: 2024/04/20 13:58:01 by shebaz           ###   ########.fr       */
+/*   Updated: 2024/04/20 15:37:05 by shebaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	push_back_to_stacka(t_stack **stackA, t_stack **stackB)//done
 		if (ft_lstsize(*stackA) == 0)
 		{
 			pa(stackA, stackB);
-			printf("pa\n");
+			ft_printf("pa\n");
 		}
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: shebaz <shebaz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:33:05 by shebaz            #+#    #+#             */
-/*   Updated: 2024/04/20 11:19:31 by shebaz           ###   ########.fr       */
+/*   Updated: 2024/04/20 14:24:55 by shebaz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,19 @@ void	sort_five_element(t_stack **stackA, t_stack **stackB)//done
 	int	min;
 
 	i = 0;
-	while (i++ < 2)
+	while (i < 2)
 	{
 		min = min_element(*stackA);
 		while (pos(*stackA, min) != 0)
 		{
 			if (pos(*stackA, min) <= ft_lstsize(*stackA) / 2)
-			{
-				ra(stackA);
-				ft_printf("ra\n");
-			}
+				execute_print_move(stackA, stackB, "ra\n");
 			else
-			{
-				rra(stackA);
-				ft_printf("rra\n");
-			}
+				execute_print_move(stackA, stackB, "rra\n");
 		}
-		pb(stackA, stackB);
-		ft_printf("pb\n");
+		execute_print_move(stackA, stackB, "pb\n");
+		i++;
 	}
 	sort_three_element(stackA);
-	push_back_to_stacka(stackA, stackA);
+	push_back_to_stacka(stackA, stackB);
 }
