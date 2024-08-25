@@ -73,30 +73,115 @@ void	fill_the_stack(int argc, char **argv, t_stack **stackA)//done
 	}
 	free(arr);
 }
-
-int	main(int argc, char **argv)//Almost done
+int check_syntax_errors(Token *tokens)
 {
-	t_stack	*stack_a;
-	t_stack	*stack_b;
+    int open_parentheses = 0;
+    Token *current = tokens;
+    Token *prev = NULL;
 
-	stack_a = NULL;
-	stack_b = NULL;
-	if (!check_all(argc, argv))
-		return (0);
-	else
-		fill_the_stack(argc, argv, &stack_a);
-	if (is_stack_sorted(stack_a, 0))
-		return (0);
-	else if (ft_lstsize(stack_a) == 5)
-		sort_five_element(&stack_a, &stack_b);
-	else if (ft_lstsize(stack_a) == 3)
-		sort_three_element(&stack_a);
-	else
-	{
-		push_half_to_stackb(&stack_a, &stack_b);
-		push_back_to_stacka(&stack_a, &stack_b);
-	}
-	if (!is_stack_sorted(stack_a, 0))
-		sort_stacka(&stack_a);
-	return (0);
+    while (current)
+    {
+        // Check for unmatched parentheses
+        if (current->type == TOKEN_OPEN_PARENTH)
+            open_parentheses++;
+        else if (current->type == TOKEN_CLOSE_PARENTH)
+            open_parentheses--;
+
+        if (open_parentheses < 0)
+        {
+            printf("Syntax Error: Unmatched closing parenthesis.\n");
+            return 1;
+        }
+
+        // Check for consecutive operators or missing arguments
+        if (prev)
+        {
+            if ((prev->type == TOKEN_PIPE || prev->type == TOKEN_DOUBLE_PIPE ||
+                 prev->type == TOKEN_DOUBLE_AMP || prev->type == TOKEN_REDIR_OUT ||
+                 prev->type == TOKEN_REDIR_IN || prev->type == TOKEN_REDIR_APPEND ||
+                 prev->type == TOKEN_REDIR_HERE_DOC) &&
+                (current->type == TOKEN_PIPE || current->type == TOKEN_DOUBLE_PIPE ||
+                 current->type == TOKEN_DOUBLE_AMP || current->type == TOKEN_REDIR_OUT ||
+                 current->type == TOKEN_REDIR_IN || current->type == TOKEN_REDIR_APPEND ||
+                 current->type == TOKEN_REDIR_HERE_DOC))
+            {
+                printf("Syntax Error: Consecutive operators detected: %s and %s.\n", prev->value, current->value);
+                return 1;
+            }
+
+            // Check for operators at the beginning or end of the input
+            if ((prev->type == TOKEN_PIPE || prev->type == TOKEN_DOUBLE_PIPE ||
+                 prev->type == TOKEN_DOUBLE_AMP || prev->type == TOKEN_REDIR_OUT ||
+                 prev->type == TOKEN_REDIR_IN || prev->type == TOKEN_REDIR_APPEND ||
+                 prev->type == TOKEN_REDIR_HERE_DOC) && !current->next)
+            {
+                printf("Syntax Error: Operator '%s' at the end of input.\n", prev->value);
+                return 1;
+            }
+        }
+
+        prev = current;
+        current = current->next;
+    }
+
+    if (open_parentheses > 0)
+    {
+        printf("Syntax Error: Unmatched opening parenthesis.\n");
+        return 1;
+    }
+
+    return 0;
+}
+#include "minishell.h"
+
+// Function prototypes (if needed)
+int check_syntax_errors(Token *tokens);
+
+// Other functions and code
+void print_ast(t_ast *ast, int depth) { /* ... */ }
+t_queue *push_queue(t_queue *queue, Token *node) { /* ... */ }
+t_ast *push_to_ast_stack(t_ast *ast_stack, t_ast *ast_node) { /* ... */ }
+t_ast *pop_ast_stack(t_ast **ast_stack) { /* ... */ }
+void print_queue(t_queue *queue) { /* ... */ }
+void print_tokens(Token *tokens) { /* ... */ }
+
+// Syntax error checking function
+int check_syntax_errors(Token *tokens)
+{
+    // Function implementation here
+    /* ... */
+}
+
+// Main function
+int main(void)
+{
+    char *input;
+    Token **tokens;
+    t_queue *queue;
+
+    tokens = NULL;
+    while (1)
+    {
+        input = readline("Minishell$ ");
+        tokens = tokenize(input);
+
+        // Check for syntax errors
+        if (check_syntax_errors(*tokens))
+        {
+            printf("Syntax error detected, please fix your input.\n");
+            continue;
+        }
+
+        queue = generate_postfix(*tokens);
+        while (queue)
+        {
+            printf("%s ", queue->node->value);
+            queue = queue->next;
+        }
+        printf("\n");
+
+        // t_ast *ast = generate_ast_from_postfix(*tokens);
+        // print_ast(ast, 5);
+    }
+    return (0);
 }
